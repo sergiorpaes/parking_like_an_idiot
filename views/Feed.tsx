@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { Report } from '../types';
 import { SettingsModal } from '../components/SettingsModal';
+import { ParkingLogo } from '../components/ParkingLogo';
 
 interface FeedProps {
     reports: Report[];
@@ -16,19 +17,21 @@ export const Feed: React.FC<FeedProps> = ({ reports, isMuted, toggleMute, t }) =
 
     return (
         <div className={`p-4 h-full flex flex-col overflow-y-auto pb-32 no-scrollbar`}>
-            <header className="mb-6 flex items-center justify-between pt-4">
-                <div className="flex items-center gap-2">
-                    {/* Placeholder for small logo if needed */}
-                    <h1 className={`text-xl ${currentTheme.fonts.heading} ${currentTheme.colors.text}`}>{t('appTitle')}</h1>
+            <header className="mb-6 pt-2">
+                <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                        <ParkingLogo size="sm" themeColor={currentTheme.colors.accent.split('-')[1] + '-500'} />
+                        <h1 className={`text-lg font-black italic uppercase ${currentTheme.fonts.heading} ${currentTheme.colors.text} leading-none tracking-wider`}>
+                            {t('appTitle')}
+                        </h1>
+                    </div>
+                    <div className="flex gap-2">
+                        <button onClick={() => setShowSettings(true)} className={`w-10 h-10 rounded-full ${currentTheme.colors.surface} flex items-center justify-center ${currentTheme.colors.secondary} border ${currentTheme.colors.border} active:scale-90 transition-all`}>
+                            ⚙️
+                        </button>
+                    </div>
                 </div>
-                <div className="flex gap-2">
-                    <button onClick={() => setShowSettings(true)} className={`w-10 h-10 rounded-full ${currentTheme.colors.surface} flex items-center justify-center ${currentTheme.colors.secondary} border ${currentTheme.colors.border}`}>
-                        ⚙️
-                    </button>
-                    <button onClick={toggleMute} className={`w-10 h-10 rounded-full ${currentTheme.colors.surface} flex items-center justify-center ${currentTheme.colors.secondary} border ${currentTheme.colors.border}`}>
-                        {isMuted ? '🔇' : '🔊'}
-                    </button>
-                </div>
+                <div className={`h-1 w-full bg-gradient-to-r from-${currentTheme.colors.accent.split('-')[1]}-500 to-transparent opacity-50 rounded-full`}></div>
             </header>
 
             <div className="space-y-6">

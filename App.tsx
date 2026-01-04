@@ -12,6 +12,7 @@ import { ScanButton } from './components/Layout/ScanButton';
 import { Feed } from './views/Feed';
 import { Leaderboard } from './views/Leaderboard';
 import { Profile } from './views/Profile';
+import { ParkingLogo } from './components/ParkingLogo';
 
 const MAX_STORED_REPORTS = 10;
 const DAILY_POINT_CAP = 200;
@@ -65,25 +66,7 @@ const STRINGS: Record<string, any> = {
   }
 };
 
-const ParkingLogo: React.FC<{ size?: 'sm' | 'md' | 'lg', themeColor?: string }> = ({ size = 'md', themeColor = 'yellow-500' }) => {
-  const dimensions = { sm: 'w-10 h-10', md: 'w-24 h-24', lg: 'w-40 h-40' };
-  return (
-    <div className={`relative ${dimensions[size]} flex items-center justify-center group text-${themeColor}`}>
-      <div className={`absolute inset-0 bg-${themeColor}/20 rounded-full blur-3xl group-hover:bg-${themeColor}/30 transition-all duration-500`}></div>
-      <svg className="w-full h-full relative z-10" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="60" cy="60" r="54" stroke="currentColor" strokeWidth={1} strokeDasharray="10 6" className="animate-[scan_3s_linear_infinite]" />
-        <circle cx="60" cy="60" r="42" stroke="currentColor" strokeWidth={8} />
-        <path d="M 30 30 L 90 90" stroke="currentColor" strokeWidth={8} strokeLinecap="round" />
-        <g className="translate-x-[28px] translate-y-[45px]">
-          <path d="M 4 15 C 4 12.7909 5.79086 11 8 11 H 56 C 58.2091 11 60 12.7909 60 15 V 25 H 4 V 15 Z" fill="#000" />
-          <path d="M 12 11 L 18 3 H 46 L 52 11" stroke="#000" strokeWidth={4} />
-          <circle cx="16" cy="27" r="6" fill="#000" stroke="currentColor" strokeWidth={2} />
-          <circle cx="48" cy="27" r="6" fill="#000" stroke="currentColor" strokeWidth={2} />
-        </g>
-      </svg>
-    </div>
-  );
-};
+// ParkingLogo removed - imported from components
 
 const AppContent: React.FC = () => {
   const { currentTheme, setTheme } = useTheme();
@@ -581,7 +564,7 @@ const AppContent: React.FC = () => {
               <button onClick={() => toggleView('home')} className="absolute top-6 left-6 p-4 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/10 active:scale-90 transition-all z-20">✕</button>
 
               {/* Scanning Overlay */}
-              <div className="relative w-[92vw] aspect-square max-w-[500px] border-2 border-white/30 rounded-3xl overflow-hidden z-10 shadow-[0_0_0_100vmax_rgba(0,0,0,0.6)]">
+              <div className="relative w-[92vw] h-[75vh] max-w-[500px] border-2 border-white/30 rounded-3xl overflow-hidden z-10 shadow-[0_0_0_100vmax_rgba(0,0,0,0.6)]">
                 {/* Corners */}
                 <div className="absolute top-0 left-0 w-10 h-10 border-t-[6px] border-l-[6px] border-yellow-500 rounded-tl-2xl"></div>
                 <div className="absolute top-0 right-0 w-10 h-10 border-t-[6px] border-r-[6px] border-yellow-500 rounded-tr-2xl"></div>
