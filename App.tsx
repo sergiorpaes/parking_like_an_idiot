@@ -573,14 +573,38 @@ const AppContent: React.FC = () => {
         {/* Keeping specialized views (Camera, Result) inline for now but styled */}
         {view === 'camera' && (
           <div className="fixed inset-0 z-[200] bg-black flex flex-col overflow-hidden">
-            <div className="relative flex-1 bg-zinc-950 flex items-center justify-center">
-              <video ref={videoRef} autoPlay playsInline className="h-full w-full object-cover transition-transform duration-200" style={{ transform: `scale(${zoomLevel})` }} />
+            <div className="relative flex-1 bg-zinc-950 flex flex-col items-center justify-center pt-20">
+              {/* Camera Feed */}
+              <video ref={videoRef} autoPlay playsInline className="absolute inset-0 h-full w-full object-cover z-0" style={{ transform: `scale(${zoomLevel})` }} />
+
+              {/* Close Button */}
               <button onClick={() => toggleView('home')} className="absolute top-6 left-6 p-4 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/10 active:scale-90 transition-all z-20">✕</button>
-            </div>
-            <div className="h-40 bg-zinc-950 flex items-center justify-center px-10 gap-12 relative border-t border-zinc-900">
-              <div className="w-12 h-12" />
-              <button onClick={capturePhoto} className={`w-24 h-24 bg-white rounded-full p-1 border-8 ${currentTheme.colors.border} shadow-[0_0_30px_rgba(255,255,255,0.3)] active:scale-90 transition-all`} />
-              <button onClick={() => setIsFlashOn(!isFlashOn)} className={`w-12 h-12 rounded-full border flex items-center justify-center text-lg ${isFlashOn ? 'bg-white text-black' : 'border-zinc-800 text-zinc-600'}`}>⚡</button>
+
+              {/* Scanning Overlay */}
+              <div className="relative w-[92vw] aspect-square max-w-[500px] border-2 border-white/30 rounded-3xl overflow-hidden z-10 shadow-[0_0_0_100vmax_rgba(0,0,0,0.6)]">
+                {/* Corners */}
+                <div className="absolute top-0 left-0 w-10 h-10 border-t-[6px] border-l-[6px] border-yellow-500 rounded-tl-2xl"></div>
+                <div className="absolute top-0 right-0 w-10 h-10 border-t-[6px] border-r-[6px] border-yellow-500 rounded-tr-2xl"></div>
+                <div className="absolute bottom-0 left-0 w-10 h-10 border-b-[6px] border-l-[6px] border-yellow-500 rounded-bl-2xl"></div>
+                <div className="absolute bottom-0 right-0 w-10 h-10 border-b-[6px] border-r-[6px] border-yellow-500 rounded-br-2xl"></div>
+
+                {/* Scanner Line Animation */}
+                <div className="scanner-line"></div>
+
+                {/* Hint Text */}
+                <div className="absolute bottom-4 left-0 right-0 text-center">
+                  <p className="text-white/80 text-[10px] uppercase font-black tracking-widest bg-black/50 inline-block px-3 py-1 rounded-full backdrop-blur-sm">Align Vehicle</p>
+                </div>
+              </div>
+
+              {/* Controls */}
+              <div className="absolute bottom-10 left-0 right-0 flex items-center justify-center gap-12 z-20">
+                <div className="w-12 h-12" /> {/* Spacer */}
+                <button onClick={capturePhoto} className={`w-20 h-20 bg-transparent rounded-full border-4 border-white/80 flex items-center justify-center active:scale-90 transition-all group`}>
+                  <div className={`w-16 h-16 bg-white rounded-full group-active:scale-90 transition-all`}></div>
+                </button>
+                <button onClick={() => setIsFlashOn(!isFlashOn)} className={`w-12 h-12 rounded-full flex items-center justify-center text-xl bg-black/40 backdrop-blur-md border border-white/10 ${isFlashOn ? 'text-yellow-400' : 'text-white/50'}`}>⚡</button>
+              </div>
             </div>
             <canvas ref={canvasRef} className="hidden" />
           </div>
