@@ -128,12 +128,14 @@ export const analyzeViolation = async (base64Image: string, lang: string = 'en')
     - **isVehicle**: true if a vehicle is present.
     - **confidence**: 0-100.
     - **rejectionReason**: 
+        - "NOT_A_VEHICLE" (Image is not of a motor vehicle)
         - "LOW_QUALITY" (Blurry/Dark)
-        - "NO_VIOLATION" (Legal parking or unclear)
+        - "NO_VIOLATION" (Vehicle present but legal parking/unclear violation)
         - "UNCERTAIN_VIOLATION" (Confidence < 80%)
 
     **Step 4: Rejection Trigger**
-    - If Quality Fail OR Confidence < 80%: Return points: 0, isVehicle: false, rejectionReason set.
+    - If Quality Fail OR Confidence < 80%: Return points: 0, isVehicle: false, rejectionReason set to one of the above.
+    - If NOT a vehicle: Return isVehicle: false, rejectionReason: "NOT_A_VEHICLE".
 
     Return JSON.
   `;
